@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "DevTools Source Downloader",
+  "version": "1.0.0",
+  "description": "Download all resources (HTML, CSS, JS, Images) from the Sources tab in DevTools preserving the folder structure.",
+  "devtools_page": "devtools.html",
+  "permissions": [
+    "downloads"
+  ]
+}

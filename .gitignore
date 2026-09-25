@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build/Zip files
+*.zip
+*.rar
+*.tar.gz
+
+# IDE/Editor files
+.vscode/
+.idea/

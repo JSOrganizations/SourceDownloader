@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Source Downloader</title>
+  <link rel="stylesheet" href="panel.css">
+  <script src="jszip.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Source Downloader</h2>
+    <p>Download all files currently loaded by this page (HTML, CSS, JS, Images, etc.) while preserving the folder structure.</p>
+    
+    <div style="margin-bottom: 15px; background: #333; padding: 10px; border-radius: 4px;">
+      <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: bold;">Download Scope:</label>
+      <label style="display: block; margin-bottom: 5px;">
+        <input type="radio" name="scope" value="all" checked> 
+        Download EVERYTHING (All Domains, CDNs, etc.)
+      </label>
+      <label style="display: block;">
+        <input type="radio" name="scope" value="current"> 
+        Download ONLY from current website (<span id="currentDomain" style="color: #8ab4f8;">...</span>)
+      </label>
+    </div>
+
+    <button id="downloadBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      Download Sources (.zip)
+    </button>
+    
+    <div class="progress-container">
+      <div id="status">Ready. Click the button to start.</div>
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+    </div>
+    
+    <ul id="logList"></ul>
+  </div>
+  
+  <script src="panel.js"></script>
+</body>
+</html>
