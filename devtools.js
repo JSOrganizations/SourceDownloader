@@ -1,8 +1,8 @@
+/* Copyright (c) 2026 Sowrov (Telegram: @JSOrganization). All rights reserved. */
 chrome.devtools.panels.create(
   "Source Downloader",
-  "", // Icon path (optional)
+  "",
   "panel.html",
   function(panel) {
-    console.log("Source Downloader panel created.");
   }
 );
