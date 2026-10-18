@@ -84,16 +84,16 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
         }
         
         progressFill.style.width = '100%';
-        const fullHtml = \`<!DOCTYPE html>\\n\${result}\`;
+        const fullHtml = `<!DOCTYPE html>\n${result}`;
         
         const blob = new Blob([fullHtml], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         
         const siteName = currentHostname || 'site';
         const timestamp = new Date().toISOString().replace(/T/, '_').replace(/[:.]/g, '-').slice(0, 19);
-        const filename = \`\${siteName}_live_elements_\${timestamp}.html\`;
+        const filename = `${siteName}_live_elements_${timestamp}.html`;
         
-        log(\`Triggering download for \${filename}...\`, 'success');
+        log(`Triggering download for ${filename}...`, 'success');
         
         chrome.downloads.download({ url: url, filename: filename, saveAs: true }, () => {
           URL.revokeObjectURL(url);
@@ -104,9 +104,9 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
       return; 
     }
 
-    log(\`Gathering resources (Scope: \${scope})...\`);
+    log(`Gathering resources (Scope: ${scope})...`);
     chrome.devtools.inspectedWindow.getResources(async (resources) => {
-      log(\`Found \${resources.length} total resources.\`);
+      log(`Found ${resources.length} total resources.`);
       
       const zip = new JSZip();
       let processed = 0;
@@ -125,7 +125,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
         });
       }
       
-      log(\`Processing \${validResources.length} matching resources...\`);
+      log(`Processing ${validResources.length} matching resources...`);
       
       if (validResources.length === 0) {
         log('No resources matched the criteria!', 'error');
@@ -150,22 +150,22 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
              let options = {};
              if (contentObj.encoding === 'base64') options.base64 = true;
              zip.file(filePath, contentObj.content, options);
-             log(\`Added: \${filePath}\`);
+             log(`Added: ${filePath}`);
           } else {
              skippedCount++;
-             log(\`Skipped (No Content/Permission): \${filePath}\`, 'warning');
+             log(`Skipped (No Content/Permission): ${filePath}`, 'warning');
           }
         } catch (err) {
           skippedCount++;
-          log(\`Failed to read: \${resource.url} (\${err.message})\`, 'error');
+          log(`Failed to read: ${resource.url} (${err.message})`, 'error');
         }
         
         processed++;
-        progressFill.style.width = \`\${(processed / validResources.length) * 100}%\`;
+        progressFill.style.width = `${(processed / validResources.length) * 100}%`;
       }
       
       if (skippedCount > 0) {
-        log(\`Warning: \${skippedCount} files were skipped. (Tip: Disable cache in Network tab)\`, 'warning');
+        log(`Warning: ${skippedCount} files were skipped. (Tip: Disable cache in Network tab)`, 'warning');
       }
       
       log('Capturing Live Elements (Rendered DOM)...');
@@ -178,13 +178,13 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
         });
         
         if (domContent) {
-          const fullHtml = \`<!DOCTYPE html>\\n\${domContent}\`;
+          const fullHtml = `<!DOCTYPE html>\n${domContent}`;
           const siteName = currentHostname || 'site';
-          zip.file(\`\${siteName}_live_elements.html\`, fullHtml);
-          log(\`Added: \${siteName}_live_elements.html (Live DOM)\`, 'success');
+          zip.file(`${siteName}_live_elements.html`, fullHtml);
+          log(`Added: ${siteName}_live_elements.html (Live DOM)`, 'success');
         }
       } catch (domErr) {
-        log(\`Live DOM Error: \${domErr.message}\`, 'error');
+        log(`Live DOM Error: ${domErr.message}`, 'error');
       }
       
       log('Generating zip file (this might take a moment)...');
@@ -194,7 +194,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
       log('Preparing download...', 'success');
       const siteName = currentHostname || 'sources';
       const timestamp = new Date().toISOString().replace(/T/, '_').replace(/[:.]/g, '-').slice(0, 19);
-      const filename = \`\${siteName}_sources_\${timestamp}.zip\`;
+      const filename = `${siteName}_sources_${timestamp}.zip`;
       
       chrome.downloads.download({
         url: zipUrl,
@@ -203,16 +203,16 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
       }, (downloadId) => {
         URL.revokeObjectURL(zipUrl);
         if (chrome.runtime.lastError) {
-          log(\`Download Error: \${chrome.runtime.lastError.message}\`, 'error');
+          log(`Download Error: ${chrome.runtime.lastError.message}`, 'error');
         } else {
-          log(\`Download complete! (\${filename})\`, 'success');
+          log(`Download complete! (${filename})`, 'success');
         }
         btn.disabled = false;
       });
       
     });
   } catch (err) {
-    log(\`Critical Error: \${err.message}\`, 'error');
+    log(`Critical Error: ${err.message}`, 'error');
     btn.disabled = false;
   }
 });
